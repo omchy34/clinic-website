@@ -82,7 +82,7 @@ export default function Navbar() {
           </Link>
           <div className="h-4 w-px bg-[#0D7C6B]/20" />
           <Link
-            href="#book"
+            href="/Appointment"
             className="group relative px-4 py-2 bg-[#0D7C6B] text-white text-[13px] font-semibold rounded-lg overflow-hidden shadow-md shadow-[#0D7C6B]/20 hover:shadow-[#0D7C6B]/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
           >
             <span className="relative z-10 flex items-center gap-1.5">
@@ -134,7 +134,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="#book"
+            href="/Appointment"
             onClick={() => setMenuOpen(false)}
             className="group relative mt-2 px-4 py-3 bg-[#0D7C6B] text-white text-[13px] font-semibold rounded-lg text-center overflow-hidden shadow-md shadow-[#0D7C6B]/20"
           >

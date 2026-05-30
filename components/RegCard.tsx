@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 const branches = [
   {
     id: 1,
@@ -151,13 +151,14 @@ export default function BranchSection() {
                 </div>
 
                 {/* Book Appointment Button */}
-                <button
+                <Link
+                  href="/Appointment"
                   className="mt-auto w-full py-3 rounded-xl font-semibold text-sm tracking-wide text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:gap-3 hover:opacity-90 hover:shadow-lg hover:-translate-y-0.5"
                   style={{ backgroundColor: branch.tagColor }}
                 >
                   Book Appointment
                   <span className="transition-transform group-hover:translate-x-1 duration-300">→</span>
-                </button>
+                </Link>
               </div>
             </div>
           ))}
