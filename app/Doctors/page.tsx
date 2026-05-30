@@ -249,16 +249,13 @@ function DoctorModal({ doctor, onClose }: { doctor: Doctor; onClose: () => void 
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="flex flex-col sm:flex-row gap-3 pb-7">
+          {/* Close button only */}
+          <div className="pb-7">
             <button
-              className="flex-1 py-3.5 rounded-xl text-white font-semibold text-sm tracking-wide transition-all duration-300 hover:opacity-90 hover:shadow-lg"
-              style={{ backgroundColor: doctor.accentColor }}
+              onClick={onClose}
+              className="w-full py-3.5 rounded-xl border border-[#1C2B2A]/20 text-[#1C2B2A] font-semibold text-sm tracking-wide hover:border-[#0D7C6B] hover:text-[#0D7C6B] transition-all duration-200"
             >
-              Book Appointment
-            </button>
-            <button className="flex-1 py-3.5 rounded-xl border border-[#1C2B2A]/20 text-[#1C2B2A] font-semibold text-sm tracking-wide hover:border-[#0D7C6B] hover:text-[#0D7C6B] transition-all duration-200">
-              Send Message →
+              Close
             </button>
           </div>
         </div>
@@ -269,10 +266,6 @@ function DoctorModal({ doctor, onClose }: { doctor: Doctor; onClose: () => void 
 
 export default function DoctorsPage() {
   const [activeModal, setActiveModal] = useState<Doctor | null>(null);
-  const [filter, setFilter] = useState("All");
-
-  const departments = ["All", ...doctors.map((d) => d.department)];
-  const filtered = filter === "All" ? doctors : doctors.filter((d) => d.department === filter);
 
   return (
     <div style={{ fontFamily: "'Georgia', serif" }} className="min-h-screen bg-[#F5F0E8]">
@@ -296,7 +289,6 @@ export default function DoctorsPage() {
           style={{ background: "radial-gradient(circle, #0D7C6B 0%, transparent 70%)" }} />
         <div className="absolute -bottom-24 -left-16 w-72 h-72 rounded-full opacity-10"
           style={{ background: "radial-gradient(circle, #C97B3A 0%, transparent 70%)" }} />
-        {/* Left accent */}
         <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#0D7C6B] via-[#C97B3A] to-transparent" />
 
         <div className="relative z-10 max-w-[1300px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20 py-16 sm:py-20 lg:py-24">
@@ -338,32 +330,10 @@ export default function DoctorsPage() {
         </div>
       </div>
 
-      {/* ── FILTER BAR ── */}
-      <div className="sticky top-0 z-30 bg-[#F5F0E8]/90 backdrop-blur-md border-b border-[#E0DDD5] shadow-sm">
-        <div className="max-w-[1300px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20 py-4 flex items-center gap-3 overflow-x-auto no-scrollbar">
-          <span className="text-[11px] tracking-widest uppercase text-[#9AADAC] font-semibold flex-shrink-0 mr-1">
-            Filter:
-          </span>
-          {departments.map((dep) => (
-            <button
-              key={dep}
-              onClick={() => setFilter(dep)}
-              className={`flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 border
-                ${filter === dep
-                  ? "bg-[#0D7C6B] text-white border-[#0D7C6B] shadow-md"
-                  : "bg-white text-[#4A5C5B] border-[#D8D4CC] hover:border-[#0D7C6B] hover:text-[#0D7C6B]"
-                }`}
-            >
-              {dep}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* ── DOCTOR CARDS ── */}
       <div className="max-w-[1300px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20 py-14 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8">
-          {filtered.map((doctor) => (
+          {doctors.map((doctor) => (
             <div
               key={doctor.id}
               className="group relative bg-white rounded-3xl overflow-hidden shadow-[0_2px_24px_rgba(0,0,0,0.07)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.13)] transition-all duration-500 hover:-translate-y-2 flex flex-col cursor-pointer"
@@ -462,33 +432,18 @@ export default function DoctorsPage() {
                   <span className="text-xs text-[#9AADAC]">{doctor.reviews} reviews</span>
                 </div>
 
-                {/* CTA */}
-                <div className="mt-auto flex gap-2">
-                  <button
-                    className="flex-1 py-3 rounded-xl text-white font-semibold text-xs tracking-wide transition-all duration-300 hover:opacity-90 hover:shadow-md"
-                    style={{ backgroundColor: doctor.accentColor }}
-                    onClick={(e) => { e.stopPropagation(); setActiveModal(doctor); }}
-                  >
-                    View Profile
-                  </button>
-                  <button
-                    className="px-4 py-3 rounded-xl border border-[#D8D4CC] text-[#4A5C5B] text-xs font-semibold hover:border-[#0D7C6B] hover:text-[#0D7C6B] transition-all duration-200"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Book →
-                  </button>
-                </div>
+                {/* CTA – View Profile only */}
+                <button
+                  className="mt-auto w-full py-3 rounded-xl text-white font-semibold text-xs tracking-wide transition-all duration-300 hover:opacity-90 hover:shadow-md"
+                  style={{ backgroundColor: doctor.accentColor }}
+                  onClick={(e) => { e.stopPropagation(); setActiveModal(doctor); }}
+                >
+                  View Profile
+                </button>
               </div>
             </div>
           ))}
         </div>
-
-        {filtered.length === 0 && (
-          <div className="text-center py-24 text-[#9AADAC]">
-            <p className="text-4xl mb-3">🔍</p>
-            <p className="text-sm">No doctors found for this department.</p>
-          </div>
-        )}
       </div>
 
       {/* ── BOTTOM TRUST BAND ── */}
